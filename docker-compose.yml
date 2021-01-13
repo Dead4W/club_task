@@ -1,0 +1,10 @@
+---
+version: "3"
+services:
+   web:
+      restart: always
+      build: .
+      container_name: club_task_calculator
+      ports:
+         - "8080:80"
+      restart: unless-stopped
