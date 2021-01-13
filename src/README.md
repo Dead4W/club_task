@@ -1,6 +1,9 @@
 # "Клуб Приключений" Test work
 
+[![buddy pipeline](https://app.buddy.works/dead4w/club-task/pipelines/pipeline/301757/badge.svg?token=bfcd84c7fa743dec501694b1ab6f97bf4a546bc3b193573ce0ac16661765648f "buddy pipeline")](https://app.buddy.works/dead4w/club-task/pipelines/pipeline/301757)
 
+![Code size](https://img.shields.io/github/languages/code-size/dead4w/club-task.svg)
+![Lines of Code](https://tokei.rs/b1/github/dead4w/club-task?category=code)
 
 ------------------------
 
