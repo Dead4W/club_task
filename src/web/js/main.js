@@ -6,7 +6,6 @@ app = {
 
         for( let i = 0;i<forms.length;i++ ) {
             let form = forms[i];
-            window.testvar = form;
 
             form.onsubmit = (e) => {
 
