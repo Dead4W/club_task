@@ -33,9 +33,6 @@
     - "apt-get install -y zlib1g-dev"
     - "apt-get install -y libzip-dev"
     - "docker-php-ext-install zip"
-    - "# php ext pdo_mysql"
-    - "docker-php-ext-configure pdo_mysql --with-pdo-mysql"
-    - "docker-php-ext-install pdo_mysql"
     volume_mappings:
     - "/:/buddy/test"
     trigger_condition: "ALWAYS"
