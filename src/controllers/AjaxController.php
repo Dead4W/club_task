@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\common\enums\ErrorResponse;
 use app\common\enums\Operation;
 use Exception;
 use phpDocumentor\Reflection\Types\String_;
@@ -23,7 +24,7 @@ class AjaxController extends Controller
     /**
      * Displays homepage.
      *
-     * @return string
+     * @return array
      */
     static public function actionCalculate()
     {
@@ -32,38 +33,55 @@ class AjaxController extends Controller
 
         if($request->isPost)
         {
-            $operation = $request->post("operation_id");
+            $operation_id = $request->post("operation_id");
             $a = $request->post("number1");
             $b = $request->post("number2");
 
             // check params is not empty and isset
-            if( !self::validate([$a, $b, $operation]) ) {
-                return self::_response('Some param is empty');
+            if( !self::validate([$a, $b, $operation_id]) ) {
+                return self::_responseBad(ErrorResponse::$EMPTY_PARAM);
+            }
+
+            $Operation = Operation::getById($operation_id);
+
+            if( $Operation === false ) {
+                return self::_responseBad(ErrorResponse::$UNDEFINED_METHOD);
             }
 
             // divide by zero exception
             try {
-                $total = Calculator::calculate($operation, $a, $b);
+                $total = Calculator::calculate($Operation, $a, $b);
             } catch (Exception $e) {
-                return self::_response('Divide by zero error');
+                return self::_responseBad(ErrorResponse::$DIVIDE_BY_ZERO);
             }
 
             // check undefined operation
             if( $total === false ) {
                 // Print error message
-                return self::_response('undefined operation');
+                return self::_responseBad(ErrorResponse::$UNDEFINED_METHOD);
             } else {
-                $mark = Operation::$mark[$operation];
-                return self::_response("{$a} {$mark} {$b} = {$total}");
+                $mark = $Operation->getMark();
+                return self::_responseGood("{$a} {$mark} {$b} = {$total}");
             }
         }
 
-        return self::_response('undefined operation');
+        return self::_responseBad(ErrorResponse::$UNDEFINED_METHOD);
     }
-    private static function _response($data) {
+
+    private static function _responseGood($data) {
         return [
             'status' => 1,
             'data' => $data
+        ];
+    }
+
+    private static function _responseBad(ErrorResponse $error) {
+        return [
+            'status' => 0,
+            'error' => [
+                "code" => $error->getCode(),
+                "title" => $error->getTitle(),
+            ]
         ];
     }
 

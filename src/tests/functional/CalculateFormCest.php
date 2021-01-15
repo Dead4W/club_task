@@ -1,5 +1,6 @@
 <?php
 
+use \app\common\enums\ErrorResponse;
 
 /**
  * Inherited Methods
@@ -29,7 +30,7 @@ class calculateFormCest
         $I->fillField('number1', '');
         $I->fillField('number2', '4');
         $I->click('Calculate');
-        $I->see('Some param is empty', '#result');
+        $I->see(ErrorResponse::$EMPTY_PARAM->getTitle(), '#result');
     }
 
     public function tryDivideZero(FunctionalTester $I)
@@ -40,7 +41,7 @@ class calculateFormCest
             'operation_id' => '3',
             'submitButton' => 'Calculate',
         ));
-        $I->see('Divide by zero error', '#result');
+        $I->see(ErrorResponse::$DIVIDE_BY_ZERO->getTitle(), '#result');
     }
 
     public function tryUndefineOperation(FunctionalTester $I)
@@ -51,7 +52,7 @@ class calculateFormCest
             'operation_id' => '4',
             'submitButton' => 'Calculate',
         ));
-        $I->see('undefined operation', '#result');
+        $I->see(ErrorResponse::$UNDEFINED_METHOD->getTitle(), '#result');
     }
 
     public function tryPlus(FunctionalTester $I)

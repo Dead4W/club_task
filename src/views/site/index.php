@@ -15,12 +15,11 @@ $this->title = 'Test_task';
         <select name="operation_id">
             <?php
 
-            for ( $i = 0; $i < count(Operation::$id);$i++ ) {
-                $mark = Operation::$mark[$i];
-                $title = Operation::$title[$i];
+            $operations = Operation::getMap();
 
+            foreach ($operations as $Operation) {
                 ?>
-                <option value="<?php echo $i ?>" data-value="<?php echo $mark ?>"><?php echo $title ?></option>
+                <option value="<?php echo $Operation->getId(); ?>" data-value="<?php echo $Operation->getMark(); ?>"><?php echo $Operation->getTitle(); ?></option>
                 <?php
             }
 

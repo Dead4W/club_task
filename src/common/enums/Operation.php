@@ -2,22 +2,50 @@
 
 namespace app\common\enums;
 
-class Operation
+use app\common\Enum;
+
+class Operation extends Enum
 {
-    // name function in Calculator::class
-    public static $id = [
-        "operation_plus" => 0,
-        "operation_minus" => 1,
-        "operation_times" => 2,
-        "operation_divide" => 3,
-    ];
+    public static $PLUS;
+    public static $MINUS;
+    public static $TIMES;
+    public static $DIVIDE;
 
-    public static $mark = ["+", "-", "*", "/"];
+    /* custom data getters */
 
-    public static $title = [
-        "Plus",
-        "Minus",
-        "Times",
-        "Divide",
-    ];
+    function getTitle() {
+        return $this->data[0];
+    }
+
+    function getMark() {
+        return $this->data[1];
+    }
+
+    function getFunction() {
+        return $this->data[2];
+    }
 }
+
+// register
+Operation::$PLUS = new Operation(0, ['Plus', "+", "operation_plus"]);
+Operation::$MINUS = new Operation(1, ["Minus", "-", "operation_minus"]);
+Operation::$TIMES = new Operation(2, ["Times", "*", "operation_times"]);
+Operation::$DIVIDE = new Operation(3, ["Divide", "/", "operation_divide"]);
+
+Operation::init();
+
+/*
+ * Usage:
+ *
+ * Operation::$PLUS->getId();
+ * Operation::$PLUS->getTitle();
+ * Operation::$PLUS->getMark();
+ *
+ * or find by id
+ * return false if Operation not find
+ * $operation = Operation::getById(1);
+ *
+ * $operation->getId();
+ * $operation->getTitle();
+ * $operation->getMark();
+ */
