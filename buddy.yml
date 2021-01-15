@@ -1,5 +1,5 @@
 - pipeline: "Build, Test"
-  trigger_mode: "MANUAL"
+  trigger_mode: "ON_EVERY_PUSH"
   ref_name: "master"
   ref_type: "BRANCH"
   priority: "NORMAL"
